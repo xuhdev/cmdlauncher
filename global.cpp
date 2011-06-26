@@ -100,6 +100,12 @@ Global::Global()
     tmpterm->cmd = "konsole --hold -e";
     terminals.append(tmpterm);
 #endif
+#ifdef Q_WS_WIN
+    tmpterm = new Terminal();
+    tmpterm->name = "cmd";
+    tmpterm->cmd = "cmd /K";
+    terminals.append(tmpterm);
+#endif
 }
 
 Global* Global::getInstance()
