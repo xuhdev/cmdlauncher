@@ -46,3 +46,4 @@ qt4_wrap_cpp(cmdlauncher_MOC_SRCS ${cmdlauncher_MOC_HDRS})
 
 add_executable(cmdlauncher ${cmdlauncher_SRCS} ${cmdlauncher_MOC_SRCS})
 target_link_libraries(cmdlauncher ${QT_LIBRARIES})
+install(TARGETS cmdlauncher DESTINATION bin)
