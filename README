@@ -23,3 +23,10 @@ To install it:
 
 For other platform, just use cmake to generate the project file and use your
 favorate compiler to build it.
+
+3. Usage
+
+To use it, create a file storing the information of your command first, for
+example "example.cla". Edit this file with a text editor. The format of this
+file could be reffered to sample.cla. Execute "cmdlauncher sample.cla" to see
+how it works.

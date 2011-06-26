@@ -1,0 +1,81 @@
+#!/bin/env cmdlauncher
+
+[general]
+
+; your command, "echo" is as an example here
+cmd=echo
+
+; the tabs will be displayed
+tabs=tab0,tab1
+
+; the window title when launched
+title=your title
+
+[items]
+; the title of the item
+a/title=bool item
+; the type of the item, could be bool, text, list, file
+a/type=bool
+; the default value
+a/default=1
+; if the type is bool, when it is "yes", what string will be appended to the
+; command
+a/value/yes="yes"
+; if the type is bool, when it is "no", what string will be appended to the
+; command
+a/value/no="no"
+; which tab should it belong to
+a/tab=tab0
+
+b/title=text item
+; text type
+b/type=text
+; default text
+b/default=hello
+b/tab=tab1
+; when the text is not empty, what string will be appended to the command.
+; %a is te text which is input by the user.
+b/value/nonempty=the text is %a
+; when the text is empty, what string will be appended to the command
+b/value/empty=nothing
+
+c/title=list item
+c/type=list
+; default selected
+c/default=2
+; what does the list contain
+c/list=this,is,a,list
+c/tab=tab0
+
+; c/value/n=something, n should be a number, it means what will be appended to
+; the command string when the nth of the list is selected
+; what will be appended to the command string when the 0th is selected
+c/value/0=hello
+; what will be appended to the command string when the 1st is selected
+c/value/1=my
+; what will be appended to the command string when the 2nd is selected
+c/value/2=little
+; what will be appended to the command string when the 3rd is selected
+c/value/3=puppy
+
+d/title=file item
+d/tab=tab0
+; file type, user can select a file
+d/type=file
+; default file
+d/default=default-file.txt
+; when the file input is not empty, what string should be appended. %a will be
+; replaced by the file name
+d/value/nonempty=the file is %a
+; when the file input is empty, what string should be appended.
+d/value/empty=nofile
+
+; the about dialog
+[about]
+
+; program's name
+name=your program's name
+; description of your command
+description=your description
+; your homepage
+url=your homepage
