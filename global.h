@@ -38,6 +38,7 @@ public:
     typedef QHash<QString, QVariant> Item;
 
     static Global* getInstance();
+    static void printHelp();
 
     // terminal information
     struct Terminal

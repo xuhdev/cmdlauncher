@@ -24,26 +24,40 @@
 #include <QApplication>
 #include <QSettings>
 #include <QStringList>
+#include <QTextStream>
+#include <cstdlib>
 
 Global::Global()
 {
-    const QStringList& arguments = qApp->arguments();
+    QStringList arguments = qApp->arguments();
 
     // parse the arguments first
-    if(arguments.count() == 2)
-        this->iniFile = arguments.at(1);
-    else
+    // we don't need the first argument
+    arguments.pop_front();
+    bool file_flag = false;
+    Q_FOREACH(const QString& arg, arguments)
     {
-        bool file_flag = false;
-        Q_FOREACH(const QString& arg, arguments)
+        if(file_flag)
         {
-            if(file_flag)
-            {
-                file_flag = false;
-                this->iniFile = arg;
-            }
-            else if(arg == "-f" || arg == "--file")
-                file_flag = true;
+            file_flag = false;
+            this->iniFile = arg;
+        }
+        else if(arg == "-f" || arg == "--file")
+            file_flag = true;
+        else if(arg == "--help")
+        {
+            Global::printHelp();
+            exit(0);
+        }
+        else if(this->iniFile.isEmpty())
+            this->iniFile = arg;
+        else
+        {
+            QTextStream out(stderr, QIODevice::WriteOnly);
+
+            out << "Arguments error" << endl;
+
+            exit(1);
         }
     }
 
@@ -154,4 +168,21 @@ void Global::setItemTabpageRow(int index, int tab, int row)
 
     item->insert("tabpage", tab);
     item->insert("row", row);
+}
+
+/*
+ * print help message
+ */
+void Global::printHelp()
+{
+    QTextStream out(stdout, QIODevice::WriteOnly);
+
+    out << QObject::tr(
+               "Usage: cmdlauncher [arguments] file\n"
+               "\n"
+               "arguments:\n"
+               "\n"
+               "--file\tor\t-f\t\tthe cla file specified\n"
+               "--help\t\t\t\tprint this help message\n"
+               ) << endl;
 }
