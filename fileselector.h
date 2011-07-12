@@ -44,6 +44,10 @@ private:
     QString filter;
     bool    fileMustExist;
 
+    // set this to true if you want to file dialog to be used to select
+    // directory
+    bool    dirSelect;
+
 public:
     QLineEdit* getLineEdit();
     QPushButton* getPushButton();
@@ -51,6 +55,7 @@ public:
     void setDir(const QString& dir);
     void setFilter(const QString& filter);
     void setFileMustExist(bool existance);
+    void setDirSelect(bool dir_select);
 
 private Q_SLOTS:
     void onPushButtonClicked();

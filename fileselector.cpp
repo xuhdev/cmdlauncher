@@ -56,7 +56,10 @@ QPushButton* FileSelector::getPushButton()
 void FileSelector::onPushButtonClicked()
 {
     QString file;
-    if(fileMustExist)
+    if(dirSelect)
+        file = QFileDialog::getExistingDirectory(
+                    NULL, QObject::tr("Select a Folder"), dir);
+    else if(fileMustExist)
         file = QFileDialog::getOpenFileName(
                     NULL, QObject::tr("Open a file"), dir,
                     filter, NULL, 0);
@@ -85,3 +88,9 @@ void FileSelector::setFileMustExist(bool existance)
 {
     this->fileMustExist = existance;
 }
+
+void FileSelector::setDirSelect(bool dir_select)
+{
+    this->dirSelect = dir_select;
+}
+
