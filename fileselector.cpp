@@ -55,9 +55,15 @@ QPushButton* FileSelector::getPushButton()
 
 void FileSelector::onPushButtonClicked()
 {
-    QString file = QFileDialog::getOpenFileName(
-                NULL, QObject::tr("Open a file"), dir,
-                filter, NULL, 0);
+    QString file;
+    if(fileMustExist)
+        file = QFileDialog::getOpenFileName(
+                    NULL, QObject::tr("Open a file"), dir,
+                    filter, NULL, 0);
+    else
+        file = QFileDialog::getSaveFileName(
+                    NULL, QObject::tr("Save a file"), dir,
+                    filter, NULL, 0);
 
     if(file.isEmpty())
         return;
@@ -73,4 +79,9 @@ void FileSelector::setDir(const QString& dir)
 void FileSelector::setFilter(const QString& filter)
 {
     this->filter = filter;
+}
+
+void FileSelector::setFileMustExist(bool existance)
+{
+    this->fileMustExist = existance;
 }

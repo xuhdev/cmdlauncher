@@ -132,6 +132,8 @@ MainWindow::MainWindow(QWidget *parent)
                         item->value("default").toString());
             new_fileselector->setDir(item->value("dir").toString());
             new_fileselector->setFilter(item->value("filter").toString());
+            new_fileselector->setFileMustExist(
+                        item->value("mustexist", true).toBool());
             new_widget = new_fileselector;
         }
 

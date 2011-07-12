@@ -42,6 +42,7 @@ private:
     // used for file dialog
     QString dir;
     QString filter;
+    bool    fileMustExist;
 
 public:
     QLineEdit* getLineEdit();
@@ -49,6 +50,7 @@ public:
 
     void setDir(const QString& dir);
     void setFilter(const QString& filter);
+    void setFileMustExist(bool existance);
 
 private Q_SLOTS:
     void onPushButtonClicked();
