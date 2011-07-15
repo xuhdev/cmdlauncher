@@ -25,6 +25,7 @@
 
 #include <QHash>
 #include <QList>
+#include <QRect>
 #include <QString>
 #include <QStringList>
 #include <QVariant>
@@ -64,6 +65,7 @@ private:
     QList<Global::Item*> items;
     QList<Global::Terminal*> terminals;
     Global::About about;
+    QRect startupGeometry; // startup geometry
 
 public:
     const QList<Global::Item*>* getItems();
@@ -72,6 +74,7 @@ public:
     const QString* getWindowTitle();
     const QList<Global::Terminal*>* getTerminals();
     const Global::About* getAbout();
+    const QRect* getStartupGeometry();
     void setItemTabpageRow(int index, int tabpage, int row);
 };
 

@@ -22,6 +22,8 @@
 
 #include "global.h"
 #include <QApplication>
+#include <QDesktopWidget>
+#include <QRegExp>
 #include <QSettings>
 #include <QStringList>
 #include <QTextStream>
@@ -31,10 +33,19 @@ Global::Global()
 {
     QStringList arguments = qApp->arguments();
 
+    // set default startup geometry
+    startupGeometry.setWidth(800);
+    startupGeometry.setHeight(600);
+    startupGeometry.setX((QApplication::desktop()->width() -
+                          startupGeometry.width())/2);
+    startupGeometry.setY((QApplication::desktop()->height() -
+                          startupGeometry.height())/2);
+
     // parse the arguments first
     // we don't need the first argument
     arguments.pop_front();
     bool file_flag = false;
+    bool geometry_flag = false;
     Q_FOREACH(const QString& arg, arguments)
     {
         if(file_flag)
@@ -42,8 +53,27 @@ Global::Global()
             file_flag = false;
             this->iniFile = arg;
         }
+        else if(geometry_flag)
+        {
+            geometry_flag = false;
+
+            // set startup geometry from argument list
+            QRegExp re("[\\*x\\+]");
+            const QStringList l = arg.split(re);
+            int len = l.length();
+            if(len > 0)
+                startupGeometry.setWidth(l.at(0).toInt());
+            if(len > 1)
+                startupGeometry.setHeight(l.at(1).toInt());
+            if(len > 2)
+                startupGeometry.setX(l.at(2).toInt());
+            if(len > 3)
+                startupGeometry.setY(l.at(3).toInt());
+        }
         else if(arg == "-f" || arg == "--file")
             file_flag = true;
+        else if(arg == "--geometry")
+            geometry_flag = true;
         else if(arg == "--help")
         {
             Global::printHelp();
@@ -182,7 +212,15 @@ void Global::printHelp()
                "\n"
                "arguments:\n"
                "\n"
-               "--file\tor\t-f\t\tthe cla file specified\n"
-               "--help\t\t\t\tprint this help message\n"
+               "--geometry\t\t\tthe startup geometry of the window."
+               " Format is like this: widthxheight+x+y.\n"
+               "\t\t\t\tExample: 800x600+50+50\n"
+               "--file\tor\t-f\t\tThe cla file specified\n"
+               "--help\t\t\t\tPrint this help message\n"
                ) << endl;
+}
+
+const QRect* Global::getStartupGeometry()
+{
+    return &startupGeometry;
 }

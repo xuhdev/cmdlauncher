@@ -24,7 +24,6 @@
 #include <QApplication>
 #include <QCheckBox>
 #include <QComboBox>
-#include <QDesktopWidget>
 #include <QHBoxLayout>
 #include <QHeaderView>
 #include <QLabel>
@@ -45,11 +44,7 @@
 MainWindow::MainWindow(QWidget *parent)
     : QWidget(parent)
 {
-    QRect re(0, 0, 800, 600);
-    re.setX((QApplication::desktop()->width() - re.width())/2);
-    re.setY((QApplication::desktop()->height() - re.height())/2);
-
-    setGeometry(re);
+    setGeometry(*Global::getInstance()->getStartupGeometry());
 
     setWindowTitle(*Global::getInstance()->getWindowTitle() +
                    "  --  " + QObject::tr("CmdLauncher"));

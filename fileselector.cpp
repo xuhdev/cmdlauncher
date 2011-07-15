@@ -93,4 +93,3 @@ void FileSelector::setDirSelect(bool dir_select)
 {
     this->dirSelect = dir_select;
 }
-
