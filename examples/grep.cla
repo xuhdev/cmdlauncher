@@ -1,0 +1,87 @@
+#!/bin/env cmdlauncher
+
+; this is an example file for GNU grep
+[general]
+cmd=grep
+title=grep
+tabs=common, optional
+
+[items]
+; pattern
+e/type=text
+e/title=use PATTERN for matching
+e/order=1
+e/tab=common
+e/value/nonempty=%a
+e/mustnotempty=1
+
+; file
+f/type=file
+f/title=Files to be obtained for PATTERN
+f/value/nonempty=%a
+f/mustnotempty=1
+f/order=2
+f/tab=common
+
+; regex type
+retype/type=list
+retype/title=Type of pattern
+retype/list=extended regular expression (ERE), newline-separated fixed strings, basic regular expression (BRE), Perl regular expression
+retype/default=0
+retype/value/0=-E
+retype/value/1=-F
+retype/value/2=-G
+retype/value/3=-P
+retype/order=0
+retype/tab=optional
+
+; -i
+i/type=bool
+i/title=ignore case distinctions
+i/value/yes=-i
+i/order=0
+i/default=0
+i/tab=optional
+
+; -n
+n/type=bool
+n/title=print line number with output lines
+n/default=0
+n/value/yes=-n
+n/order=0
+n/tab=optional
+
+; -H
+H/type=bool
+H/title=print the filename for each match
+H/default=0
+H/value/yes=-H
+H/order=0
+H/tab=optional
+
+; -c
+c/type=bool
+c/title=print only a count of matching lines per file
+c/default=0
+c/value/yes=-c
+c/tab=optional
+c/order=0
+
+; -b
+b/type=bool
+b/title=print the byte offset with output lines
+b/default=0
+b/value/yes=-b
+d/tab=optional
+b/order=0
+
+; -d
+d/type=list
+d/title=how to handle directories
+d/default=0
+d/list=read, recurse, skip
+d/value/0=-d read
+d/value/1=-d recurse
+d/value/2=-d skip
+d/order=0
+d/tab=optional
