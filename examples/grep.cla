@@ -85,3 +85,8 @@ d/value/1=-d recurse
 d/value/2=-d skip
 d/order=0
 d/tab=optional
+
+[about]
+name=GNU grep
+description=print lines matching a pattern
+url=http://www.gnu.org/software/grep
