@@ -67,6 +67,9 @@ private:
     Global::About about;
     QRect startupGeometry; // startup geometry
 
+protected:
+    static QRect convertGeometryStringToRect(const QString& geostr);
+
 public:
     const QList<Global::Item*>* getItems();
     const QString* getCommand();

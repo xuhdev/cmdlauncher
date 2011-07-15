@@ -58,17 +58,7 @@ Global::Global()
             geometry_flag = false;
 
             // set startup geometry from argument list
-            QRegExp re("[\\*x\\+]");
-            const QStringList l = arg.split(re);
-            int len = l.length();
-            if(len > 0)
-                startupGeometry.setWidth(l.at(0).toInt());
-            if(len > 1)
-                startupGeometry.setHeight(l.at(1).toInt());
-            if(len > 2)
-                startupGeometry.setX(l.at(2).toInt());
-            if(len > 3)
-                startupGeometry.setY(l.at(3).toInt());
+            startupGeometry = convertGeometryStringToRect(arg);
         }
         else if(arg == "-f" || arg == "--file")
             file_flag = true;
@@ -223,4 +213,26 @@ void Global::printHelp()
 const QRect* Global::getStartupGeometry()
 {
     return &startupGeometry;
+}
+
+/*
+ * convert geometry string to a QRect
+ */
+QRect Global::convertGeometryStringToRect(const QString& geostr)
+{
+    QRect ret;
+
+    QRegExp re("[\\*x\\+]");
+    const QStringList l = geostr.split(re);
+    int len = l.length();
+    if(len > 0)
+        ret.setWidth(l.at(0).toInt());
+    if(len > 1)
+        ret.setHeight(l.at(1).toInt());
+    if(len > 2)
+        ret.setX(l.at(2).toInt());
+    if(len > 3)
+        ret.setY(l.at(3).toInt());
+
+    return ret;
 }
