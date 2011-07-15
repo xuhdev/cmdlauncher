@@ -88,6 +88,8 @@ Global::Global()
     this->command = ini.value("cmd").toString();
     this->tabs = ini.value("tabs").toStringList();
     this->windowTitle = ini.value("title").toString();
+    this->startupGeometry = convertGeometryStringToRect(
+                ini.value("geometry").toString());
 
     // "items" section
     ini.beginGroup("items");

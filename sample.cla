@@ -11,6 +11,10 @@ tabs=tab0,tab1
 ; the window title when launched
 title=your title
 
+; the geometry when the window shows. It's optional.
+; Format is: widthxheight+x+y
+geometry=800x600+50+50
+
 [items]
 ; the title of the item
 a/title=bool item
