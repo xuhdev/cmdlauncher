@@ -277,6 +277,21 @@ void MainWindow::onClickedButtonStart()
                             model.mainTableModels[tabpage]->index(
                                 row, COLUMN_VALUE)));
 
+            // if the field must be filled but it's empty, ask the user to
+            // fill it
+            if(item->value("mustnotempty", false).toBool() &&
+                    widget->getLineEdit()->text().isEmpty())
+            {
+                QMessageBox::information(
+                            this,
+                            QObject::tr(""),
+                            QObject::tr("Some fields must not be empty."));
+
+                selectItemOnMainTableViews(*item);
+
+                return;
+            }
+
             tmpstr += widget->getLineEdit()->text().isEmpty() ?
                         "empty" : "nonempty";
 
