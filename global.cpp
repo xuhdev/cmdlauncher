@@ -122,6 +122,7 @@ Global::Global()
     ini.beginGroup("about");
 
     about.name = ini.value("name").toString();
+    about.version = ini.value("version").toString();
     about.description = ini.value("description").toString();
     about.authors = ini.value("authors").toStringList();
     about.url = ini.value("url").toString();

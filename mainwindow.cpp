@@ -380,6 +380,7 @@ void MainWindow::onClickedMenuItemAboutApp()
 
     AboutDialog(this,
                 a->name,
+                a->version,
                 a->description,
                 a->authors,
                 a->url,
@@ -391,6 +392,7 @@ void MainWindow::onClickedMenuItemAboutCmdLauncher()
 {
     AboutDialog(this,
                 "CmdLauncher",
+                "0.1",
                 "Launch a command graphically",
                 QStringList("Hong Xu <xuhdev@gmail.com>"),
                 "http://cmdlauncher.sourceforge.net").exec();

@@ -51,6 +51,7 @@ public:
     struct About
     {
         QString name;
+        QString version;
         QString description;
         QStringList authors;
         QString url;
