@@ -24,6 +24,7 @@
 #include <QGridLayout>
 #include <QLabel>
 #include <QPushButton>
+#include <QRegExp>
 
 AboutDialog::AboutDialog(QWidget*              parent,
                          const QString&        name,
@@ -43,7 +44,7 @@ AboutDialog::AboutDialog(QWidget*              parent,
 
     if(!authors.isEmpty())
     {
-        QString tmpstr(QObject::tr("Authors:") + "\n");
+        QString tmpstr(QObject::tr("Author(s):") + "\n");
         Q_FOREACH(const QString& s, authors)
             tmpstr += s + "\n";
         root_layout->addWidget(new QLabel(tmpstr, this), 2, 1);
