@@ -27,6 +27,7 @@
 #include <QSettings>
 #include <QStringList>
 #include <QTextStream>
+#include <QtAlgorithms>
 #include <cstdlib>
 
 Global::Global()
@@ -110,6 +111,8 @@ Global::Global()
         ini.endGroup(); // ini.beginGroup(item);
     }
 
+    qSort(items.begin(), items.end(), Global::lessThanItems);
+
     ini.endGroup(); // ini.beginGroup("items");
 
     ini.beginGroup("about");
@@ -142,6 +145,23 @@ Global::Global()
     tmpterm->cmd = "cmd /K";
     terminals.append(tmpterm);
 #endif
+}
+
+bool Global::lessThanItems(const Global::Item* i1, const Global::Item* i2)
+{
+    int a = i1->value("order", -1).toInt();
+    int b = i2->value("order", -1).toInt();
+
+    // if the numbers are less than 0 and they are not -1, set them to 0
+    if(a < 0 && a != -1)
+        a = 0;
+    if(b < 0 && b != -1)
+        b = 0;
+
+    if(b == -1)
+        return false;
+
+    return a < b;
 }
 
 Global* Global::getInstance()
