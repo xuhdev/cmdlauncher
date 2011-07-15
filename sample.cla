@@ -84,9 +84,11 @@ d/value/empty=nofile
 ; the about dialog
 [about]
 
-; program's name
+; program's name, optional
 name=your program's name
-; description of your command
+; description of your command, optional
 description=your description
-; your homepage
+; your homepage, optional
 url=your homepage
+; version, it's optional
+version=your version number

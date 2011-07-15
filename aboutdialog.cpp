@@ -28,6 +28,7 @@
 
 AboutDialog::AboutDialog(QWidget*              parent,
                          const QString&        name,
+                         const QString&        version,
                          const QString&        description,
                          const QStringList&    authors,
                          const QString&        url,
@@ -35,7 +36,8 @@ AboutDialog::AboutDialog(QWidget*              parent,
     QDialog(parent)
 {
     QGridLayout* root_layout = new QGridLayout(this);
-    root_layout->addWidget(new QLabel("<b>" + name + "</b>"), 0, 1);
+    root_layout->addWidget(
+                new QLabel("<b>" + name + "</b> " + version), 0, 1);
 
     QLabel* tmplabel = new QLabel(description, this);
     tmplabel->setWordWrap(true);

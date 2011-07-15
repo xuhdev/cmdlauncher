@@ -35,6 +35,7 @@ class AboutDialog : public QDialog
 public:
     AboutDialog(QWidget*              parent = 0,
                 const QString&        name = QString(),
+                const QString&        version = QString(),
                 const QString&        description = QString(),
                 const QStringList&    authors = QStringList(),
                 const QString&        url = QString(),
