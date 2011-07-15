@@ -28,6 +28,7 @@
 #include <QStandardItemModel>
 #include <QTabWidget>
 #include <QWidget>
+#include "global.h"
 #include "maintableview.h"
 
 class MainWindow : public QWidget
@@ -55,6 +56,7 @@ private:
 
     MainTableView* createTableView();
     QStandardItemModel* createTableModel();
+    void selectItemOnMainTableViews(const Global::Item& item);
 
 public:
     MainWindow(QWidget *parent = NULL);

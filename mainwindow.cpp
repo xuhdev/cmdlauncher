@@ -40,12 +40,10 @@
 #include "aboutdialog.h"
 #include "fileselector.h"
 #include "global.h"
-#include <QDebug>
 
 MainWindow::MainWindow(QWidget *parent)
     : QWidget(parent)
 {
-    qDebug() << *Global::getInstance()->getStartupGeometry();
     setGeometry(*Global::getInstance()->getStartupGeometry());
 
     setWindowTitle(*Global::getInstance()->getWindowTitle() +
@@ -230,6 +228,21 @@ void MainWindow::onClickedButtonStart()
                             model.mainTableModels[tabpage]->index(
                                 row, COLUMN_VALUE)));
 
+            // if the field must be filled but it's empty, ask the user to
+            // fill it
+            if(item->value("mustnotempty", false).toBool() &&
+                    widget->text().isEmpty())
+            {
+                QMessageBox::information(
+                            this,
+                            QObject::tr(""),
+                            QObject::tr("Some fields must not be empty."));
+
+                selectItemOnMainTableViews(*item);
+
+                return;
+            }
+
             tmpstr += widget->text().isEmpty() ? "empty" : "nonempty";
 
             final_cmd += " ";
@@ -385,4 +398,14 @@ void MainWindow::onMainTableViewsSizeChanged(QSize old_size, QSize new_size)
     sender->setColumnWidth(
                 COLUMN_VALUE, sender->width() -
                 sender->columnWidth(COLUMN_ITEM) - 10);
+}
+
+/*
+ * select one row specified by item on mainTableViews
+ */
+void MainWindow::selectItemOnMainTableViews(const Global::Item& item)
+{
+    int tabpage = item.value("tabpage", 0).toInt();
+    ui.mainTabWidget->setCurrentIndex(tabpage);
+    ui.mainTableViews[tabpage]->selectRow(item.value("row").toInt());
 }
