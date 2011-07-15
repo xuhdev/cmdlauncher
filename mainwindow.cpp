@@ -36,6 +36,7 @@
 #include <QPushButton>
 #include <QResizeEvent>
 #include <QStringList>
+#include <QTextStream>
 #include <QVBoxLayout>
 #include "aboutdialog.h"
 #include "fileselector.h"
@@ -301,10 +302,13 @@ void MainWindow::onClickedButtonStart()
         }
     }
 
-    if(!QProcess::startDetached(
-                Global::getInstance()->getTerminals()->at(
-                    ui.termCombobox->currentIndex())->cmd
-                + " " + final_cmd))
+    QString cmd_to_exec = Global::getInstance()->getTerminals()->at(
+                ui.termCombobox->currentIndex())->cmd + " " + final_cmd;
+
+    QTextStream out(stdout);
+    out << "Executing " + cmd_to_exec << endl;
+
+    if(!QProcess::startDetached(cmd_to_exec))
     {
         QMessageBox::information(
                     this, "CmdLauncher",
