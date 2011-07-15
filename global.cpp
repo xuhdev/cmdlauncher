@@ -47,6 +47,8 @@ Global::Global()
     arguments.pop_front();
     bool file_flag = false;
     bool geometry_flag = false;
+    // whether the geometry has been set in the command line
+    bool geometry_set = false;
     Q_FOREACH(const QString& arg, arguments)
     {
         if(file_flag)
@@ -57,6 +59,7 @@ Global::Global()
         else if(geometry_flag)
         {
             geometry_flag = false;
+            geometry_set = true;
 
             // set startup geometry from argument list
             startupGeometry = convertGeometryStringToRect(arg);
@@ -89,7 +92,8 @@ Global::Global()
     this->command = ini.value("cmd").toString();
     this->tabs = ini.value("tabs").toStringList();
     this->windowTitle = ini.value("title").toString();
-    this->startupGeometry = convertGeometryStringToRect(
+    if(ini.allKeys().contains("geometry") && !geometry_set)
+        this->startupGeometry = convertGeometryStringToRect(
                 ini.value("geometry").toString());
 
     // "items" section

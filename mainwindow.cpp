@@ -40,10 +40,12 @@
 #include "aboutdialog.h"
 #include "fileselector.h"
 #include "global.h"
+#include <QDebug>
 
 MainWindow::MainWindow(QWidget *parent)
     : QWidget(parent)
 {
+    qDebug() << *Global::getInstance()->getStartupGeometry();
     setGeometry(*Global::getInstance()->getStartupGeometry());
 
     setWindowTitle(*Global::getInstance()->getWindowTitle() +
