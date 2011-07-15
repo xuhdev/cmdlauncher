@@ -147,6 +147,9 @@ Global::Global()
 #endif
 }
 
+/*
+ * the "less than" function of the Global::Item
+ */
 bool Global::lessThanItems(const Global::Item* i1, const Global::Item* i2)
 {
     int a = i1->value("order", -1).toInt();
