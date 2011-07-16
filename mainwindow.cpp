@@ -130,8 +130,23 @@ MainWindow::MainWindow(QWidget *parent)
             new_fileselector->setFilter(item->value("filter").toString());
             new_fileselector->setFileMustExist(
                         item->value("mustexist", true).toBool());
-            new_fileselector->setDirSelect(
-                        item->value("selectdir", false).toBool());
+
+            // set file mode
+            QString filemode = item->value("filemode", "file").toString();
+            if(filemode == "file")
+                new_fileselector->setFileMode(FileSelector::FILEMODE_FILE);
+            else if(filemode == "dir")
+                new_fileselector->setFileMode(FileSelector::FILEMODE_DIR);
+            else if(filemode == "both")
+                new_fileselector->setFileMode(FileSelector::FILEMODE_BOTH);
+            else
+            {
+                QTextStream out(stdout);
+                out << QObject::tr("Warning: Filemode ") + filemode +
+                                   QObject::tr(" could not be recognized.")
+                    << endl;
+            }
+
             new_widget = new_fileselector;
         }
 

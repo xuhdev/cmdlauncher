@@ -44,9 +44,15 @@ private:
     QString filter;
     bool    fileMustExist;
 
-    // set this to true if you want to file dialog to be used to select
-    // directory
-    bool    dirSelect;
+public:
+    enum FileMode
+    {
+        FILEMODE_FILE = 1, // only file could be selected
+        FILEMODE_DIR,   // only dir could be selected
+        FILEMODE_BOTH   // both file and dir could be selected
+    };
+private:
+    enum FileMode fileMode;
 
 public:
     QLineEdit* getLineEdit();
@@ -55,10 +61,12 @@ public:
     void setDir(const QString& dir);
     void setFilter(const QString& filter);
     void setFileMustExist(bool existance);
-    void setDirSelect(bool dir_select);
+    void setFileMode(enum FileMode fm);
 
 private Q_SLOTS:
-    void onPushButtonClicked();
+    void openFileBrowser();
+    void openDirBrowser();
+    void popupFileModeMenu();
 };
 
 #endif // FILESELECTOR_H

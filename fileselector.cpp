@@ -23,6 +23,7 @@
 #include "fileselector.h"
 #include <QFileDialog>
 #include <QHBoxLayout>
+#include <QMenu>
 
 FileSelector::FileSelector(QWidget *parent) :
     QWidget(parent)
@@ -40,7 +41,8 @@ FileSelector::FileSelector(QWidget *parent) :
 
     setLayout(tmplayout);
 
-    connect(pushButton, SIGNAL(clicked()), SLOT(onPushButtonClicked()));
+    // default file mode is "file"
+    setFileMode(FILEMODE_FILE);
 }
 
 QLineEdit* FileSelector::getLineEdit()
@@ -53,13 +55,37 @@ QPushButton* FileSelector::getPushButton()
     return pushButton;
 }
 
-void FileSelector::onPushButtonClicked()
+/*
+ * popup the menu which allow users to choose file or directory
+ */
+void FileSelector::popupFileModeMenu()
+{
+    QPushButton* sender = qobject_cast<QPushButton*>(QObject::sender());
+
+    if(!sender)
+        return;
+
+    QMenu popup(this);
+
+    popup.addAction(
+                QObject::tr("Browse file..."), this, SLOT(openFileBrowser()));
+    popup.addAction(
+                QObject::tr("Browse directory..."),
+                this, SLOT(openDirBrowser()));
+
+    QPoint p = sender->pos();
+    p.setY(p.y() + sender->height());
+    popup.exec(mapToGlobal(p));
+}
+
+/*
+ * open file browser dialog
+ */
+void FileSelector::openFileBrowser()
 {
     QString file;
-    if(dirSelect)
-        file = QFileDialog::getExistingDirectory(
-                    NULL, QObject::tr("Select a Folder"), dir);
-    else if(fileMustExist)
+
+    if(fileMustExist)
         file = QFileDialog::getOpenFileName(
                     NULL, QObject::tr("Open a file"), dir,
                     filter, NULL, 0);
@@ -67,6 +93,20 @@ void FileSelector::onPushButtonClicked()
         file = QFileDialog::getSaveFileName(
                     NULL, QObject::tr("Save a file"), dir,
                     filter, NULL, 0);
+
+    if(file.isEmpty())
+        return;
+
+    lineEdit->setText(file);
+}
+
+/*
+ * open dir browser dialog
+ */
+void FileSelector::openDirBrowser()
+{
+    QString file(QFileDialog::getExistingDirectory(
+                     NULL, QObject::tr("Select a Folder"), dir));
 
     if(file.isEmpty())
         return;
@@ -89,7 +129,23 @@ void FileSelector::setFileMustExist(bool existance)
     this->fileMustExist = existance;
 }
 
-void FileSelector::setDirSelect(bool dir_select)
+void FileSelector::setFileMode(enum FileMode fm)
 {
-    this->dirSelect = dir_select;
+    this->fileMode = fm;
+
+    // disconnect current connections before set connections
+    this->pushButton->disconnect(this);
+
+    switch(fm)
+    {
+    case FILEMODE_FILE:
+        connect(pushButton, SIGNAL(clicked()), SLOT(openFileBrowser()));
+        break;
+    case FILEMODE_DIR:
+        connect(pushButton, SIGNAL(clicked()), SLOT(openDirBrowser()));
+        break;
+    case FILEMODE_BOTH:
+        connect(pushButton, SIGNAL(clicked()), SLOT(popupFileModeMenu()));
+        break;
+    }
 }
