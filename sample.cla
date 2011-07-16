@@ -80,6 +80,9 @@ d/default=default-file.txt
 d/value/nonempty=the file is %a
 ; when the file input is empty, what string should be appended.
 d/value/empty=nofile
+; filemode, "file", "dir" or "both", means the user could browse file, dir, or
+; both file and dir respectively. Default is "file"
+d/filemode=file
 
 ; the about dialog
 [about]

@@ -20,6 +20,7 @@ f/type=file
 f/title=Files to be obtained for PATTERN
 f/value/nonempty=%a
 f/mustnotempty=1
+f/filemode=both
 f/order=2
 f/tab=common
 
