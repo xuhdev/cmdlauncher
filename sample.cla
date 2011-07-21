@@ -24,10 +24,10 @@ a/type=bool
 a/default=1
 ; if the type is bool, when it is "yes", what string will be appended to the
 ; command
-a/value/yes="yes"
+a/value/yes=yes
 ; if the type is bool, when it is "no", what string will be appended to the
 ; command
-a/value/no="no"
+a/value/no=no
 ; which tab should it belong to
 a/tab=tab0
 ; the order of this parameter. If the number is not negative, the greater the
