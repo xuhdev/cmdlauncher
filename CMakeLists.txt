@@ -37,7 +37,6 @@ qt4_automoc(${cmdlauncher_SRCS})
 set(cmdlauncher_MOC_HDRS
     aboutdialog.h
     fileselector.h
-    global.h
     maintableview.h
     mainwindow.h
     )
