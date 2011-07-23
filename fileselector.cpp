@@ -21,9 +21,13 @@
  */
 
 #include "fileselector.h"
+#include <QCoreApplication>
+#include <QEvent>
 #include <QFileDialog>
 #include <QHBoxLayout>
 #include <QMenu>
+#include <QMouseEvent>
+#include <QPoint>
 
 FileSelector::FileSelector(QWidget *parent) :
     QWidget(parent)
@@ -41,8 +45,39 @@ FileSelector::FileSelector(QWidget *parent) :
 
     setLayout(tmplayout);
 
+    lineEdit->installEventFilter(this);
+
     // default file mode is "file"
     setFileMode(FILEMODE_FILE);
+}
+
+bool FileSelector::eventFilter(QObject * watched, QEvent * event)
+{
+    do
+    {
+        // when the lineedit is empty, filemode is not "both", and the user
+        // double clicked on the lineedit, then open the browse dialog.
+        if(watched == lineEdit &&
+                event->type() == QEvent::MouseButtonDblClick &&
+                lineEdit->text().trimmed().isEmpty() &&
+                getFileMode() != FILEMODE_BOTH)
+        {
+            QMouseEvent* mouse_event = static_cast<QMouseEvent*>(event);
+            if(mouse_event->button() != Qt::LeftButton)
+                break;
+
+            QMouseEvent pressed_event(
+                        QMouseEvent::MouseButtonPress, QPoint(0, 0),
+                        Qt::LeftButton, 0, 0);
+            QCoreApplication::sendEvent(pushButton, &pressed_event);
+            QMouseEvent released_event(
+                        QMouseEvent::MouseButtonRelease, QPoint(0, 0),
+                        Qt::LeftButton, 0, 0);
+            QCoreApplication::sendEvent(pushButton, &released_event);
+        }
+    }
+    while(false);
+    return QWidget::eventFilter(watched, event);
 }
 
 QLineEdit* FileSelector::getLineEdit()
@@ -148,4 +183,9 @@ void FileSelector::setFileMode(enum FileMode fm)
         connect(pushButton, SIGNAL(clicked()), SLOT(popupFileModeMenu()));
         break;
     }
+}
+
+enum FileSelector::FileMode FileSelector::getFileMode()
+{
+    return fileMode;
 }

@@ -62,11 +62,15 @@ public:
     void setFilter(const QString& filter);
     void setFileMustExist(bool existance);
     void setFileMode(enum FileMode fm);
+    enum FileMode getFileMode();
 
 private Q_SLOTS:
     void openFileBrowser();
     void openDirBrowser();
     void popupFileModeMenu();
+
+private:
+    bool eventFilter(QObject * watched, QEvent * event);
 };
 
 #endif // FILESELECTOR_H
