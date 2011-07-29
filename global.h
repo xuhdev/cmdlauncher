@@ -68,8 +68,11 @@ private:
     Global::About about;
     QRect startupGeometry; // startup geometry
 
-private:
-    static bool lessThanItems(const Global::Item* i1, const Global::Item* i2);
+public:
+    static bool lessThanItemsOrder(
+        const Global::Item* i1, const Global::Item* i2);
+    static bool lessThanItemsDisplayorder(
+        const Global::Item* i1, const Global::Item* i2);
 
 protected:
     static QRect convertGeometryStringToRect(const QString& geostr);

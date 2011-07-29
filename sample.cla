@@ -30,11 +30,20 @@ a/value/yes=yes
 a/value/no=no
 ; which tab should it belong to
 a/tab=tab0
-; the order of this parameter. If the number is not negative, the greater the
-; number is, the ender it will be put in the command line. If the number is -1,
-; it will be regarded as the largest positive number. If the number is negative
-; and it's not -1, it will be set to 0 internally. Default value is -1, which
-; means it will be put at the end with others whose order is -1
+; the order used for display of this parameter.If the number is not negative,
+; the greater the number is, the ender it will be put in the command line. If
+; the number is -1, it will be regarded as the largest positive number. If the
+; number is negative and it's not -1, it will be set to 0 internally. Default
+; value is -1, which means it will be put at the end with others whose order is
+; -1
+a/displayorder=5
+
+; the order of the position in the command line this parameter. If the number
+; is not negative, the greater the number is, the ender it will be put in the
+; command line. If the number is -1, it will be regarded as the largest
+; positive number. If the number is negative and it's not -1, it will be set to
+; 0 internally. Default value is -1, which means it will be put at the end with
+; others whose order is -1
 a/order=2
 
 b/title=text item
@@ -48,6 +57,7 @@ b/tab=tab1
 b/value/nonempty=the text is %a
 ; when the text is empty, what string will be appended to the command
 b/value/empty=nothing
+b/displayorder=4
 
 c/title=list item
 c/type=list
@@ -57,6 +67,7 @@ c/default=2
 c/list=this,is,a,list
 c/tab=tab0
 c/order=1
+c/displayorder=8
 
 ; c/value/n=something, n should be a number, it means what will be appended to
 ; the command string when the nth of the list is selected

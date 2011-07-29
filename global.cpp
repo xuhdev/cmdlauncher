@@ -115,8 +115,6 @@ Global::Global()
         ini.endGroup(); // ini.beginGroup(item);
     }
 
-    qSort(items.begin(), items.end(), Global::lessThanItems);
-
     ini.endGroup(); // ini.beginGroup("items");
 
     ini.beginGroup("about");
@@ -129,6 +127,13 @@ Global::Global()
     about.pixmapFile = ini.value("pixmap").toString();
 
     ini.endGroup(); // ini.beginGroup("about");
+
+    // sort items according to "order"
+    qSort(items.begin(), items.end(), Global::lessThanItemsOrder);
+    // after sort the items according to "order", give them a number
+    int item_count = items.count();
+    for(int i = 0; i < item_count; ++i)
+        (*items.at(i))["No."] = i;
 
     // terminal information
     Terminal* tmpterm;
@@ -153,12 +158,34 @@ Global::Global()
 }
 
 /*
- * the "less than" function of the Global::Item
+ * the "less than" function of the Global::Item by "order"
  */
-bool Global::lessThanItems(const Global::Item* i1, const Global::Item* i2)
+bool Global::lessThanItemsOrder(
+    const Global::Item* i1, const Global::Item* i2)
 {
     int a = i1->value("order", -1).toInt();
     int b = i2->value("order", -1).toInt();
+
+    // if the numbers are less than 0 and they are not -1, set them to 0
+    if(a < 0 && a != -1)
+        a = 0;
+    if(b < 0 && b != -1)
+        b = 0;
+
+    if(b == -1)
+        return false;
+
+    return a < b;
+}
+
+/*
+ * the "less than" function of the Global::Item by "displayorder"
+ */
+bool Global::lessThanItemsDisplayorder(
+    const Global::Item* i1, const Global::Item* i2)
+{
+    int a = i1->value("displayorder", -1).toInt();
+    int b = i2->value("displayorder", -1).toInt();
 
     // if the numbers are less than 0 and they are not -1, set them to 0
     if(a < 0 && a != -1)

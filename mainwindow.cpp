@@ -76,7 +76,13 @@ MainWindow::MainWindow(QWidget *parent)
     }
 
     // read data and display
-    const QList<Global::Item*>* items = Global::getInstance()->getItems();
+    QList<Global::Item*>* items0 = new QList<Global::Item*>(
+                *Global::getInstance()->getItems());
+
+    qSort(items0->begin(), items0->end(), Global::lessThanItemsDisplayorder);
+
+    const QList<Global::Item*>* items = items0;
+
     int count = items->count();
 
     for(int i = 0; i < count; ++ i)
@@ -89,7 +95,8 @@ MainWindow::MainWindow(QWidget *parent)
             tabpage = 0;
 
         Global::getInstance()->setItemTabpageRow(
-                    i, tabpage, model.mainTableModels[tabpage]->rowCount());
+                    item->value("No.").toInt(),
+                    tabpage, model.mainTableModels[tabpage]->rowCount());
 
         model.mainTableModels[tabpage]->appendRow(
                 new QStandardItem(item->value("title", "").toString()));
@@ -157,6 +164,8 @@ MainWindow::MainWindow(QWidget *parent)
                             COLUMN_VALUE),
                         new_widget);
     }
+
+    delete items0;
 
     // put a "n items" on the bottom of each tab.
     int tabcount = ui.mainTabWidget->count();
