@@ -74,6 +74,11 @@ bool FileSelector::eventFilter(QObject * watched, QEvent * event)
                         QMouseEvent::MouseButtonRelease, QPoint(0, 0),
                         Qt::LeftButton, 0, 0);
             QCoreApplication::sendEvent(pushButton, &released_event);
+
+            // select all text after the file is selected
+            lineEdit->selectAll();
+
+            return true;
         }
     }
     while(false);
@@ -133,6 +138,7 @@ void FileSelector::openFileBrowser()
         return;
 
     lineEdit->setText(file);
+    lineEdit->selectAll();
 }
 
 /*
@@ -147,6 +153,7 @@ void FileSelector::openDirBrowser()
         return;
 
     lineEdit->setText(file);
+    lineEdit->selectAll();
 }
 
 void FileSelector::setDir(const QString& dir)
