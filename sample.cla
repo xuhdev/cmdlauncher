@@ -106,3 +106,5 @@ description=your description
 url=your homepage
 ; version, it's optional
 version=your version number
+; authors
+authors=author name1, author name2
