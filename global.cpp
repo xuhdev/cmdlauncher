@@ -77,9 +77,7 @@ Global::Global()
             this->iniFile = arg;
         else
         {
-            QTextStream out(stderr, QIODevice::WriteOnly);
-
-            out << "Arguments error" << endl;
+            Global::printText(stderr, QObject::tr("Arguments error"));
 
             exit(1);
         }
@@ -292,4 +290,25 @@ QRect Global::convertGeometryStringToRect(const QString& geostr)
         ret.setY(l.at(3).toInt());
 
     return ret;
+}
+
+/*
+ * print some text to s with a prefix. Often used to print information to
+ * stderr
+ */
+void Global::printText(QTextStream* s, const QString& str,
+                      const QString prefix)
+{
+    (*s) << prefix + str << endl;
+}
+
+/*
+ * print some text to f with a prefix. Often used to print information to
+ * stderr
+ */
+void Global::printText(FILE* f, const QString& str,
+                      const QString prefix)
+{
+    QTextStream ts(f, QIODevice::WriteOnly);
+    printText(&ts, str, prefix);
 }

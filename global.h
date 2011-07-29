@@ -28,6 +28,7 @@
 #include <QRect>
 #include <QString>
 #include <QStringList>
+#include <QTextStream>
 #include <QVariant>
 
 class Global
@@ -73,6 +74,11 @@ public:
         const Global::Item* i1, const Global::Item* i2);
     static bool lessThanItemsDisplayorder(
         const Global::Item* i1, const Global::Item* i2);
+
+    static void printText(QTextStream* s, const QString& str,
+                          const QString prefix = "CmdLauncher: ");
+    static void printText(FILE* f, const QString& str,
+                          const QString prefix = "CmdLauncher: ");
 
 protected:
     static QRect convertGeometryStringToRect(const QString& geostr);

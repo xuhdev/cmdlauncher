@@ -148,10 +148,10 @@ MainWindow::MainWindow(QWidget *parent)
                 new_fileselector->setFileMode(FileSelector::FILEMODE_BOTH);
             else
             {
-                QTextStream out(stdout);
-                out << QObject::tr("Warning: Filemode ") + filemode +
-                                   QObject::tr(" could not be recognized.")
-                    << endl;
+                Global::printText(
+                            stderr,
+                            QObject::tr("[WARNING] Filemode ") + filemode +
+                            QObject::tr(" could not be recognized."));
             }
 
             new_widget = new_fileselector;
@@ -329,8 +329,7 @@ void MainWindow::onClickedButtonStart()
     QString cmd_to_exec = Global::getInstance()->getTerminals()->at(
                 ui.termCombobox->currentIndex())->cmd + " " + final_cmd;
 
-    QTextStream out(stdout);
-    out << "Executing " + cmd_to_exec << endl;
+    Global::printText(stderr, QObject::tr("Executing ") + cmd_to_exec);
 
     if(!QProcess::startDetached(cmd_to_exec))
     {
