@@ -407,7 +407,7 @@ void MainWindow::onClickedMenuItemAboutCmdLauncher()
 {
     AboutDialog(this,
                 "CmdLauncher",
-                "0.1",
+                "0.1Alpha",
                 "Launch a command graphically",
                 QStringList("Hong Xu <xuhdev@gmail.com>"),
                 "http://cmdlauncher.nongnu.org").exec();
