@@ -9,7 +9,7 @@ use it.
 
 2. Install
 
-On UNIX-like systems(including GNU/Linux, FreeBSD, NetBSD, etc.):
+On UNIX-like systems (including GNU/Linux, FreeBSD, NetBSD, etc.):
 
 First make sure that you have installed cmake, Qt4 and its develop tools. Then
 depress the source arhive and switch to the source directory of this project
@@ -22,7 +22,7 @@ To install it:
 
 # make install
 
-For other platform, just use cmake to generate the project file and use your
+For other platforms (such as Win32), just use cmake to generate the project file and use your
 favorate compiler to build it.
 
 3. Usage
