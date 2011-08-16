@@ -52,11 +52,13 @@ AboutDialog::AboutDialog(QWidget*              parent,
         root_layout->addWidget(new QLabel(tmpstr, this), 2, 1);
     }
 
-    tmplabel = new QLabel(
-                "Homepage: " "<a href=" + url + ">" + url + "</a>", this);
-    tmplabel->setOpenExternalLinks(true);
-    root_layout->addWidget(tmplabel, 3, 1);
-
+    if(!url.isEmpty())
+    {
+        tmplabel = new QLabel(
+                    "Homepage: " "<a href=" + url + ">" + url + "</a>", this);
+        tmplabel->setOpenExternalLinks(true);
+        root_layout->addWidget(tmplabel, 3, 1);
+    }
     tmplabel = new QLabel(this);
     tmplabel->setPixmap(pixmap);
     root_layout->addWidget(tmplabel, 2, 0);
