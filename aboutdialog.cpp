@@ -44,7 +44,7 @@ AboutDialog::AboutDialog(QWidget*              parent,
 
     if(!authors.isEmpty())
     {
-        QString tmpstr(QObject::tr("Author(s):") + "\n");
+        QString tmpstr("<b>" + QObject::tr("Author(s):") + "</b>\n");
         Q_FOREACH(const QString& s, authors)
             tmpstr += s + "\n";
         root_layout->addWidget(new QLabel(tmpstr, this), 2, 1);
@@ -53,7 +53,7 @@ AboutDialog::AboutDialog(QWidget*              parent,
     if(!url.isEmpty())
     {
         tmplabel = new QLabel(
-                    "Homepage: " "<a href=" + url + ">" + url + "</a>", this);
+                    "<b>Homepage:</b> " "<a href=" + url + ">" + url + "</a>", this);
         tmplabel->setOpenExternalLinks(true);
         root_layout->addWidget(tmplabel, 3, 1);
     }
