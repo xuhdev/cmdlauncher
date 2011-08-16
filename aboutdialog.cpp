@@ -45,9 +45,9 @@ AboutDialog::AboutDialog(QWidget*              parent,
 
     if(!authors.isEmpty())
     {
-        QString tmpstr("<b>" + QObject::tr("Author(s):") + "</b>\n");
+        QString tmpstr("<b>" + QObject::tr("Author(s):") + "</b><br>");
         Q_FOREACH(const QString& s, authors)
-            tmpstr += s + "\n";
+            tmpstr += s + "<br>";
         root_layout->addWidget(new QLabel(tmpstr, this), 2, 1);
     }
 
