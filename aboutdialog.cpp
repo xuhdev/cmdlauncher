@@ -36,6 +36,7 @@ AboutDialog::AboutDialog(QWidget*              parent,
     QDialog(parent)
 {
     QGridLayout* root_layout = new QGridLayout(this);
+
     root_layout->addWidget(
                 new QLabel("<b>" + name + "</b> " + version), 0, 1);
 
@@ -53,7 +54,8 @@ AboutDialog::AboutDialog(QWidget*              parent,
     if(!url.isEmpty())
     {
         tmplabel = new QLabel(
-                    "<b>Homepage:</b> " "<a href=" + url + ">" + url + "</a>", this);
+                    "<b>Homepage:</b> " "<a href=" + url + ">" + url + "</a>",
+                    this);
         tmplabel->setOpenExternalLinks(true);
         root_layout->addWidget(tmplabel, 3, 1);
     }
