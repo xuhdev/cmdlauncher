@@ -40,8 +40,6 @@ AboutDialog::AboutDialog(QWidget*              parent,
                 new QLabel("<b>" + name + "</b> " + version), 0, 1);
 
     QLabel* tmplabel = new QLabel(description, this);
-    tmplabel->setWordWrap(true);
-    tmplabel->setMaximumWidth(400);
     root_layout->addWidget(tmplabel, 1, 1);
 
     if(!authors.isEmpty())
