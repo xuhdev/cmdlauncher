@@ -24,10 +24,13 @@
 #include <QCoreApplication>
 #include <QEvent>
 #include <QFileDialog>
+#include <QFileInfo>
 #include <QHBoxLayout>
 #include <QMenu>
+#include <QMimeData>
 #include <QMouseEvent>
 #include <QPoint>
+#include <QUrl>
 
 FileSelector::FileSelector(QWidget *parent) :
     QWidget(parent)
@@ -49,6 +52,9 @@ FileSelector::FileSelector(QWidget *parent) :
 
     // default file mode is "file"
     setFileMode(FILEMODE_FILE);
+
+    // accept file dropping
+    setAcceptDrops(true);
 }
 
 bool FileSelector::eventFilter(QObject * watched, QEvent * event)
@@ -195,4 +201,37 @@ void FileSelector::setFileMode(enum FileMode fm)
 enum FileSelector::FileMode FileSelector::getFileMode()
 {
     return fileMode;
+}
+
+void FileSelector::dragEnterEvent(QDragEnterEvent* event)
+{
+    // allow any file to be dropped here, if there is only one file dropped
+    // here, and the type(file or directory) is matched
+    if(!event->mimeData()->hasUrls())
+        return;
+
+    const QList<QUrl> urls = event->mimeData()->urls();
+
+    if(urls.count() != 1)
+        return;
+
+    QFileInfo fi(urls[0].toLocalFile());
+
+    if((fileMode == FILEMODE_DIR && fi.isDir()) ||
+            (fileMode == FILEMODE_FILE && fi.isFile()) ||
+            fileMode == FILEMODE_BOTH)
+        event->acceptProposedAction();
+}
+
+void FileSelector::dropEvent(QDropEvent *event)
+{
+    // put the url in the line edit if only one url is provided, otherwise
+    // ignore whatever happens here
+
+    const QList<QUrl> urls = event->mimeData()->urls();
+
+    if(urls.count() != 1)
+        return;
+
+    lineEdit->setText(urls[0].toLocalFile());
 }

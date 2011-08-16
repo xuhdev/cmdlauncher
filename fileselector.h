@@ -23,6 +23,8 @@
 #ifndef FILESELECTOR_H
 #define FILESELECTOR_H
 
+#include <QDragEnterEvent>
+#include <QDropEvent>
 #include <QLineEdit>
 #include <QPushButton>
 #include <QWidget>
@@ -63,6 +65,10 @@ public:
     void setFileMustExist(bool existance);
     void setFileMode(enum FileMode fm);
     enum FileMode getFileMode();
+
+protected:
+    void dragEnterEvent(QDragEnterEvent *event);
+    void dropEvent(QDropEvent *event);
 
 private Q_SLOTS:
     void openFileBrowser();
