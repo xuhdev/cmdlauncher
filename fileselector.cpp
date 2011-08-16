@@ -22,6 +22,7 @@
 
 #include "fileselector.h"
 #include <QCoreApplication>
+#include <QDir>
 #include <QEvent>
 #include <QFileDialog>
 #include <QFileInfo>
