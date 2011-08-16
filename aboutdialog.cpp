@@ -59,9 +59,14 @@ AboutDialog::AboutDialog(QWidget*              parent,
         tmplabel->setOpenExternalLinks(true);
         root_layout->addWidget(tmplabel, 3, 1);
     }
-    tmplabel = new QLabel(this);
-    tmplabel->setPixmap(pixmap);
-    root_layout->addWidget(tmplabel, 2, 0);
+
+    // if pixmap is not null, display it in the about dialog
+    if(!pixmap.isNull())
+    {
+        tmplabel = new QLabel(this);
+        tmplabel->setPixmap(pixmap);
+        root_layout->addWidget(tmplabel, 2, 0);
+    }
 
     QPushButton* tmpbutton = new QPushButton(QObject::tr("OK"), this);
     connect(tmpbutton, SIGNAL(clicked()), SLOT(close()));
