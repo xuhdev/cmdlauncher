@@ -143,7 +143,7 @@ void FileSelector::openFileBrowser()
     if(file.isEmpty())
         return;
 
-    lineEdit->setText(file);
+    lineEdit->setText(QDir::toNativeSeparators(file));
     lineEdit->selectAll();
 }
 
@@ -233,5 +233,5 @@ void FileSelector::dropEvent(QDropEvent *event)
     if(urls.count() != 1)
         return;
 
-    lineEdit->setText(urls[0].toLocalFile());
+    lineEdit->setText(QDir::toNativeSeparators(urls[0].toLocalFile()));
 }
