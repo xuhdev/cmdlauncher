@@ -1,0 +1,95 @@
+#!/bin/env cmdlauncher
+
+; example cla file for auCDtect (http://en.true-audio.com)
+
+[general]
+cmd=auCDtect
+title=auCDtect
+
+[items]
+
+; -d
+d/title=Summary conclusion for set of tracks
+d/type=bool
+d/order=10
+d/displayorder=50
+d/default=0
+d/value/yes=-d
+
+; -v
+v/title=Verbose mode
+v/type=bool
+v/order=20
+v/displayorder=60
+d/default=0
+d/value/yes=-v
+
+; -m
+m/title=Detect mode
+m/type=list
+m/order=5
+m/displayorder=10
+m/list=0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40
+m/default=8
+m/value/0=-m0
+m/value/1=-m1
+m/value/2=-m2
+m/value/3=-m3
+m/value/4=-m4
+m/value/5=-m5
+m/value/6=-m6
+m/value/7=-m7
+m/value/8=-m8
+m/value/9=-m9
+m/value/10=-m10
+m/value/11=-m11
+m/value/12=-m12
+m/value/13=-m13
+m/value/14=-m14
+m/value/15=-m15
+m/value/16=-m16
+m/value/17=-m17
+m/value/18=-m18
+m/value/19=-m19
+m/value/20=-m20
+m/value/21=-m21
+m/value/22=-m22
+m/value/23=-m23
+m/value/24=-m24
+m/value/25=-m25
+m/value/26=-m26
+m/value/27=-m27
+m/value/28=-m28
+m/value/29=-m29
+m/value/30=-m30
+m/value/31=-m31
+m/value/32=-m32
+m/value/33=-m33
+m/value/34=-m34
+m/value/35=-m35
+m/value/36=-m36
+m/value/37=-m37
+m/value/38=-m38
+m/value/39=-m39
+m/value/40=-m40
+
+; file name
+filename/title=Input file
+filename/type=file
+filename/mustnotempty=1
+filename/order=100
+filename/displayorder=3
+filename/value/nonempty=%a
+
+; -h
+h/title=Print help message
+h/type=bool
+h/default=0
+h/order=50
+h/displayorder=90
+h/value/yes=-h
+
+[about]
+name=auCDtect
+description=CD records authenticity detector\n\nCopyright (c) 2004 Oleg Berngardt. All rights reserved.\nCopyright (c) 2004 Alexander Djourik. All rights reserved.
+url=http://en.true-audio.com
