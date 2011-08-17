@@ -322,7 +322,7 @@ void MainWindow::onClickedButtonStart()
 
             final_cmd += " ";
             final_cmd += item->value(tmpstr, "").toString().replace(
-                        "%a", widget->getLineEdit()->text());
+                        "%a", "\"" + widget->getLineEdit()->text() + "\"");
         }
     }
 
