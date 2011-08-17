@@ -28,6 +28,7 @@
 #include <QFileInfo>
 #include <QHBoxLayout>
 #include <QMenu>
+#include <QMessageBox>
 #include <QMimeData>
 #include <QMouseEvent>
 #include <QPoint>
@@ -234,5 +235,19 @@ void FileSelector::dropEvent(QDropEvent *event)
     if(urls.count() != 1)
         return;
 
-    lineEdit->setText(QDir::toNativeSeparators(urls[0].toLocalFile()));
+    QString local_path = urls[0].toLocalFile();
+
+    // if fileMustExist is set to 0 and an existing file is dropped here,
+    // give a warning dialog
+    if(!fileMustExist &&
+            QFileInfo(local_path).exists() &&
+            QMessageBox::warning(this,
+                QObject::tr("CmdLauncher"),
+                QObject::tr("The file already exists, and it may be "
+                    "overwritten.\n"
+                    "Do you still want to use it?"),
+                QMessageBox::Yes, QMessageBox::No) == QMessageBox::No)
+        return;
+
+    lineEdit->setText(QDir::toNativeSeparators(local_path));
 }
