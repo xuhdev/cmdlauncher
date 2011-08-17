@@ -235,7 +235,7 @@ void FileSelector::dropEvent(QDropEvent *event)
     if(urls.count() != 1)
         return;
 
-    QString local_path = urls[0].toLocalFile();
+    QString local_path(urls[0].toLocalFile());
 
     // if fileMustExist is set to 0 and an existing file is dropped here,
     // give a warning dialog
