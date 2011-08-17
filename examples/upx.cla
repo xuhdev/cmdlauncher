@@ -45,10 +45,10 @@ outfile/mustexist=1
 
 # output file
 outfile/type=file
-outfile/title=Output file
+outfile/title=Output file(Optional)
 outfile/displayorder=3
 outfile/order=90
-outfile/value/nonempty=-o%a
+outfile/value/nonempty=-o %a
 outfile/mustexist=0
 
 # verbose
