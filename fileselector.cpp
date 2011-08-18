@@ -248,7 +248,7 @@ void FileSelector::dropEvent(QDropEvent *event)
                 QObject::tr("The file already exists, and it may be "
                     "overwritten.\n"
                     "Do you still want to use it?"),
-                QMessageBox::Yes, QMessageBox::No) == QMessageBox::No)
+                QMessageBox::Yes, QMessageBox::No) != QMessageBox::Yes)
         return;
 
     lineEdit->setText(QDir::toNativeSeparators(local_path));
