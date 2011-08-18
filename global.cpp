@@ -279,15 +279,15 @@ void Global::setItemTabpageRow(int index, int tab, int row)
 const QString Global::getHelpMessage()
 {
     return QObject::tr(
-            "Usage: cmdlauncher [arguments] file\n"
+            "Usage: cmdlauncher [options] file\n"
             "\n"
-            "arguments:\n"
+            "Options:\n"
             "\n"
-            "--geometry\t\t\tthe startup geometry of the window."
+            "--geometry               the startup geometry of the window."
             " Format is like this: widthxheight+x+y.\n"
-            "\t\t\t\tExample: 800x600+50+50\n"
-            "--file\tor\t-f\t\tThe cla file specified\n"
-            "--help\t\t\t\tPrint this help message\n"
+            "                         Example: 800x600+50+50\n"
+            "--file  or  -f           The cla file specified\n"
+            "--help                   Print this help message\n"
             );
 }
 
