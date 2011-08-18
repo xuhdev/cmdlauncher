@@ -23,7 +23,6 @@
 #include "global.h"
 #include <QApplication>
 #include <QDesktopWidget>
-#include <QDir>
 #include <QFileInfo>
 #include <QMessageBox>
 #include <QRegExp>
@@ -99,8 +98,7 @@ Global::Global()
     if(!fi_ini.isReadable())
     {
         QString message(QObject::tr("Unable to load file") + " \"" +
-                QDir::toNativeSeparators(fi_ini.absolutePath()) + "\". " +
-                QObject::tr("Now Exit."));
+                iniFile + "\". " + QObject::tr("Now Exit."));
         printText(stderr, message);
         QMessageBox::critical(NULL, QObject::tr("CmdLauncher"), message);
         exit(4);
