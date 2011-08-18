@@ -79,7 +79,11 @@ Global::Global()
             this->iniFile = arg;
         else
         {
-            Global::printText(stderr, QObject::tr("Arguments error"));
+            Global::printText(stderr, QObject::tr("Arguments error")
+#ifdef Q_WS_WIN
+                    , MESSAGEBOXTYPE_CRITICAL
+#endif
+                    );
 
             exit(1);
         }
@@ -89,8 +93,11 @@ Global::Global()
     if(iniFile.isEmpty())
     {
         QString message(QObject::tr("No cla file is specified. Now Exit."));
-        printText(stderr, message);
-        QMessageBox::critical(NULL, QObject::tr("CmdLauncher"), message);
+        printText(stderr, message
+#ifdef Q_WS_WIN
+                , MESSAGEBOXTYPE_CRITICAL
+#endif
+                );
         exit(3);
     }
     // if the cla file is not readable, then we give an error message and exit
@@ -99,8 +106,11 @@ Global::Global()
     {
         QString message(QObject::tr("Unable to load file") + " \"" +
                 iniFile + "\". " + QObject::tr("Now Exit."));
-        printText(stderr, message);
-        QMessageBox::critical(NULL, QObject::tr("CmdLauncher"), message);
+        printText(stderr, message
+#ifdef Q_WS_WIN
+                , MESSAGEBOXTYPE_CRITICAL
+#endif
+                );
         exit(4);
     }
 
@@ -286,9 +296,11 @@ const QString Global::getHelpMessage()
  */
 void Global::printHelp()
 {
-    QTextStream out(stdout, QIODevice::WriteOnly);
-
-    out << getHelpMessage() << endl;
+    printText(stderr, getHelpMessage()
+#ifdef Q_WS_WIN
+            , MESSAGEBOXTYPE_INFORMATION
+#endif
+            );
 }
 
 const QRect* Global::getStartupGeometry()
@@ -319,22 +331,45 @@ QRect Global::convertGeometryStringToRect(const QString& geostr)
 }
 
 /*
- * print some text to s with a prefix. Often used to print information to
+ * print some text to s with a prefix. When dialog_type is not 0, then the
+ * message is also printed on a dialog box. Often used to print information to
  * stderr
  */
 void Global::printText(QTextStream* s, const QString& str,
-                      const QString prefix)
+        enum Global::MessageBoxType dialog_type,
+        const QString prefix)
 {
     (*s) << prefix + str << endl;
+
+    switch(dialog_type)
+    {
+    case MESSAGEBOXTYPE_QUESTION:
+        QMessageBox::question(NULL, QObject::tr("CmdLauncher"), str);
+        break;
+    case MESSAGEBOXTYPE_WARNING:
+        QMessageBox::warning(NULL, QObject::tr("CmdLauncher"), str);
+        break;
+    case MESSAGEBOXTYPE_INFORMATION:
+        QMessageBox::information(NULL, QObject::tr("CmdLauncher"), str);
+        break;
+    case MESSAGEBOXTYPE_CRITICAL:
+        QMessageBox::critical(NULL, QObject::tr("CmdLauncher"), str);
+        break;
+    case MESSAGEBOXTYPE_NO_MESSAGE_BOX:
+    default:
+        break;
+    }
 }
 
 /*
- * print some text to f with a prefix. Often used to print information to
+ * print some text to f with a prefix. When dialog_type is not 0, then the
+ * message is also printed on a dialog box. Often used to print information to
  * stderr
  */
 void Global::printText(FILE* f, const QString& str,
-                      const QString prefix)
+        enum Global::MessageBoxType dialog_type,
+        const QString prefix)
 {
     QTextStream ts(f, QIODevice::WriteOnly);
-    printText(&ts, str, prefix);
+    printText(&ts, str, dialog_type, prefix);
 }

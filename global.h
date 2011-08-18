@@ -76,10 +76,22 @@ public:
     static bool lessThanItemsDisplayorder(
         const Global::Item* i1, const Global::Item* i2);
 
+    // type of message box, used in printText
+    enum MessageBoxType
+    {
+        MESSAGEBOXTYPE_NO_MESSAGE_BOX = 0,
+        MESSAGEBOXTYPE_QUESTION,
+        MESSAGEBOXTYPE_WARNING,
+        MESSAGEBOXTYPE_INFORMATION,
+        MESSAGEBOXTYPE_CRITICAL
+    };
+
     static void printText(QTextStream* s, const QString& str,
-                          const QString prefix = "CmdLauncher: ");
+            enum MessageBoxType dialog_type = MESSAGEBOXTYPE_NO_MESSAGE_BOX,
+            const QString prefix = "CmdLauncher: ");
     static void printText(FILE* f, const QString& str,
-                          const QString prefix = "CmdLauncher: ");
+            enum MessageBoxType dialog_type = MESSAGEBOXTYPE_NO_MESSAGE_BOX,
+            const QString prefix = "CmdLauncher: ");
 
 protected:
     static QRect convertGeometryStringToRect(const QString& geostr);
