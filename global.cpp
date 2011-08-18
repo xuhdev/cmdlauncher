@@ -23,6 +23,9 @@
 #include "global.h"
 #include <QApplication>
 #include <QDesktopWidget>
+#include <QDir>
+#include <QFileInfo>
+#include <QMessageBox>
 #include <QRegExp>
 #include <QSettings>
 #include <QStringList>
@@ -81,6 +84,26 @@ Global::Global()
 
             exit(1);
         }
+    }
+
+    // if no cla file is specified, give an error message and exit.
+    if(iniFile.isEmpty())
+    {
+        QString message(QObject::tr("No cla file is specified. Now Exit."));
+        printText(stderr, message);
+        QMessageBox::critical(NULL, QObject::tr("CmdLauncher"), message);
+        exit(3);
+    }
+    // if the cla file is not readable, then we give an error message and exit
+    QFileInfo fi_ini(iniFile);
+    if(!fi_ini.isReadable())
+    {
+        QString message(QObject::tr("Unable to load file") + " \"" +
+                QDir::toNativeSeparators(fi_ini.absolutePath()) + "\". " +
+                QObject::tr("Now Exit."));
+        printText(stderr, message);
+        QMessageBox::critical(NULL, QObject::tr("CmdLauncher"), message);
+        exit(4);
     }
 
     // parse the ini file
@@ -245,6 +268,21 @@ void Global::setItemTabpageRow(int index, int tab, int row)
     item->insert("row", row);
 }
 
+const QString Global::getHelpMessage()
+{
+    return QObject::tr(
+            "Usage: cmdlauncher [arguments] file\n"
+            "\n"
+            "arguments:\n"
+            "\n"
+            "--geometry\t\t\tthe startup geometry of the window."
+            " Format is like this: widthxheight+x+y.\n"
+            "\t\t\t\tExample: 800x600+50+50\n"
+            "--file\tor\t-f\t\tThe cla file specified\n"
+            "--help\t\t\t\tPrint this help message\n"
+            );
+}
+
 /*
  * print help message
  */
@@ -252,17 +290,7 @@ void Global::printHelp()
 {
     QTextStream out(stdout, QIODevice::WriteOnly);
 
-    out << QObject::tr(
-               "Usage: cmdlauncher [arguments] file\n"
-               "\n"
-               "arguments:\n"
-               "\n"
-               "--geometry\t\t\tthe startup geometry of the window."
-               " Format is like this: widthxheight+x+y.\n"
-               "\t\t\t\tExample: 800x600+50+50\n"
-               "--file\tor\t-f\t\tThe cla file specified\n"
-               "--help\t\t\t\tPrint this help message\n"
-               ) << endl;
+    out << getHelpMessage() << endl;
 }
 
 const QRect* Global::getStartupGeometry()

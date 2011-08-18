@@ -41,6 +41,7 @@ public:
 
     static Global* getInstance();
     static void printHelp();
+    static const QString getHelpMessage();
 
     // terminal information
     struct Terminal
