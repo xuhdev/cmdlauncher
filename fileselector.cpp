@@ -55,8 +55,10 @@ FileSelector::FileSelector(QWidget *parent) :
     // default file mode is "file"
     setFileMode(FILEMODE_FILE);
 
-    // accept file dropping
+    // accept file dropping, and disable the file dropping feature of the
+    // lineedit
     setAcceptDrops(true);
+    lineEdit->setAcceptDrops(false);
 }
 
 bool FileSelector::eventFilter(QObject * watched, QEvent * event)
