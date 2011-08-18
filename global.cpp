@@ -23,6 +23,7 @@
 #include "global.h"
 #include <QApplication>
 #include <QDesktopWidget>
+#include <QFileDialog>
 #include <QFileInfo>
 #include <QMessageBox>
 #include <QRegExp>
@@ -89,16 +90,18 @@ Global::Global()
         }
     }
 
-    // if no cla file is specified, give an error message and exit.
+    // if no cla file is specified, ask the user to choose one. If the user
+    // cancels, exit
     if(iniFile.isEmpty())
     {
-        QString message(QObject::tr("No cla file is specified. Now Exit."));
-        printText(stderr, message
-#ifdef Q_WS_WIN
-                , MESSAGEBOXTYPE_CRITICAL
-#endif
-                );
-        exit(3);
+        QString message(QObject::tr("You must specify a cla file"));
+
+        QMessageBox::information(NULL, QObject::tr("CmdLauncher"), message);
+
+        iniFile = QFileDialog::getOpenFileName(NULL, message);
+
+        if(iniFile.isEmpty())
+            exit(3);
     }
     // if the cla file is not readable, then we give an error message and exit
     QFileInfo fi_ini(iniFile);
