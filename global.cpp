@@ -341,24 +341,28 @@ void Global::printText(QTextStream* s, const QString& str,
 {
     (*s) << prefix + str << endl;
 
+    if(dialog_type == MESSAGEBOXTYPE_NO_MESSAGE_BOX)
+        return;
+
+    enum QMessageBox::Icon dialog_icon;
+
     switch(dialog_type)
     {
     case MESSAGEBOXTYPE_QUESTION:
-        QMessageBox::question(NULL, QObject::tr("CmdLauncher"), str);
+        dialog_icon = QMessageBox::Question;
         break;
     case MESSAGEBOXTYPE_WARNING:
-        QMessageBox::warning(NULL, QObject::tr("CmdLauncher"), str);
+        dialog_icon = QMessageBox::Warning;
         break;
     case MESSAGEBOXTYPE_INFORMATION:
-        QMessageBox::information(NULL, QObject::tr("CmdLauncher"), str);
+        dialog_icon = QMessageBox::Information;
         break;
     case MESSAGEBOXTYPE_CRITICAL:
-        QMessageBox::critical(NULL, QObject::tr("CmdLauncher"), str);
-        break;
-    case MESSAGEBOXTYPE_NO_MESSAGE_BOX:
-    default:
+        dialog_icon = QMessageBox::Critical;
         break;
     }
+
+    QMessageBox(dialog_icon, QObject::tr("CmdLauncher"), str).exec();
 }
 
 /*
