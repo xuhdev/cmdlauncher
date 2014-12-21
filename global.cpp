@@ -169,24 +169,21 @@ Global::Global()
 
     // terminal information
     Terminal* tmpterm;
-#if defined(Q_WS_X11) || defined(Q_WS_MAC)
+
     tmpterm = new Terminal();
     tmpterm->name = "xterm";
     tmpterm->cmd = "xterm -hold -e";
     terminals.append(tmpterm);
-#endif
-#ifdef Q_WS_X11
+
     tmpterm = new Terminal();
     tmpterm->name = "konsole";
     tmpterm->cmd = "konsole --hold -e";
     terminals.append(tmpterm);
-#endif
-#ifdef Q_WS_WIN
+
     tmpterm = new Terminal();
     tmpterm->name = "cmd";
     tmpterm->cmd = "cmd /K";
     terminals.append(tmpterm);
-#endif
 }
 
 /*

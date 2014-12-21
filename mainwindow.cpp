@@ -415,10 +415,10 @@ void MainWindow::onClickedMenuItemAboutCmdLauncher()
 {
     AboutDialog(this,
                 "CmdLauncher",
-                "0.1hg",
+                "0.1git",
                 "Launch a command graphically\n\n"
-                "Copyright 2011 Hong Xu",
-                QStringList("Hong Xu <xuhdev@gmail.com>"),
+                "Copyright 2011-2014 Hong Xu",
+                QStringList("Hong Xu <hong@topbug.net>"),
                 "http://cmdlauncher.nongnu.org").exec();
 }
 

@@ -20,7 +20,7 @@
  * with CmdLauncher. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <QtGui/QApplication>
+#include <QApplication>
 #include "global.h"
 #include "mainwindow.h"
 
