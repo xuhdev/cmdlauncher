@@ -81,7 +81,7 @@ Global::Global()
         else
         {
             Global::printText(stderr, QObject::tr("Arguments error")
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
                     , MESSAGEBOXTYPE_CRITICAL
 #endif
                     );
@@ -110,7 +110,7 @@ Global::Global()
         QString message(QObject::tr("Unable to load file") + " \"" +
                 iniFile + "\". " + QObject::tr("Now Exit."));
         printText(stderr, message
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
                 , MESSAGEBOXTYPE_CRITICAL
 #endif
                 );
@@ -170,6 +170,12 @@ Global::Global()
     // terminal information
     Terminal* tmpterm;
 
+#ifdef Q_OS_WIN
+    tmpterm = new Terminal();
+    tmpterm->name = "cmd";
+    tmpterm->cmd = "cmd /K";
+    terminals.append(tmpterm);
+#else
     tmpterm = new Terminal();
     tmpterm->name = "xterm";
     tmpterm->cmd = "xterm -hold -e";
@@ -179,11 +185,7 @@ Global::Global()
     tmpterm->name = "konsole";
     tmpterm->cmd = "konsole --hold -e";
     terminals.append(tmpterm);
-
-    tmpterm = new Terminal();
-    tmpterm->name = "cmd";
-    tmpterm->cmd = "cmd /K";
-    terminals.append(tmpterm);
+#endif
 }
 
 /*
@@ -297,7 +299,7 @@ const QString Global::getHelpMessage()
 void Global::printHelp()
 {
     printText(stderr, getHelpMessage()
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
             , MESSAGEBOXTYPE_INFORMATION
 #endif
             );
