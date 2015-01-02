@@ -419,7 +419,7 @@ void MainWindow::onClickedMenuItemAboutCmdLauncher()
                 "Launch a command graphically\n\n"
                 "Copyright 2011-2014 Hong Xu",
                 QStringList("Hong Xu <hong@topbug.net>"),
-                "http://cmdlauncher.nongnu.org").exec();
+                "http://www.topbug.net/cmdlauncher").exec();
 }
 
 // about Qt menu item slot function
