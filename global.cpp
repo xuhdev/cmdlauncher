@@ -118,7 +118,17 @@ Global::Global()
     }
 
     // parse the config file
-    YAML::Node config = YAML::LoadFile(this->confFile.toUtf8().constData());
+    YAML::Node config;
+    try
+    {
+        config = YAML::LoadFile(this->confFile.toUtf8().constData());
+    } catch (YAML::Exception& e)
+    {
+        Global::printText(stderr, e.what());
+        QMessageBox(QMessageBox::Critical,
+                    QObject::tr("CmdLauncher"), e.what()).exec();
+        exit(5);
+    }
 
 #define SET_VALUE(section, x, entry)       \
     do \
