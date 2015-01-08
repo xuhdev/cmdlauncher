@@ -56,7 +56,7 @@ items:
         tab: tab1
         # when the text is not empty, what string will be appended to the command.
         # %a is te text which is input by the user.
-        value/nonempty: the text is %a
+        value/nonempty: "the text is %a"
         # when the text is empty, what string will be appended to the command
         value/empty: nothing
         displayorder: 4

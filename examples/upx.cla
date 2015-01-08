@@ -5,90 +5,97 @@
 # http://upx.sourceforge.net
 #
 
-[general]
-cmd=upx
-title=upx
+general:
+    cmd: upx
+    title: upx
 
-[items]
+items:
 
 # action
-action/type=list
-action/title=Action
-action/order=1
-action/displayorder=1
-action/list=test compressed file(-t),list compressed files(-l),decompress(-d),compress faster(-1),compress(-2),compress(-3),compress(-4),compress(-5),compress(-6),compress(-7),compress(-8), compress better(-9),compress best(--best),display version number(-V),display software license(-L)
-action/default=8
-action/value/0=-t
-action/value/1=-l
-action/value/2=-d
-action/value/3=-1
-action/value/4=-2
-action/value/5=-3
-action/value/6=-4
-action/value/7=-5
-action/value/8=-6
-action/value/9=-7
-action/value/10=-8
-action/value/11=-9
-action/value/12=--best
-action/value/13=-V
-action/value/14=-L
+    action:
+        type: list
+        title: Action
+        order: 1
+        displayorder: 1
+        list: test compressed file(-t),list compressed files(-l),decompress(-d),compress faster(-1),compress(-2),compress(-3),compress(-4),compress(-5),compress(-6),compress(-7),compress(-8), compress better(-9),compress best(--best),display version number(-V),display software license(-L)
+        default: 8
+        value/0: -t
+        value/1: -l
+        value/2: -d
+        value/3: -1
+        value/4: -2
+        value/5: -3
+        value/6: -4
+        value/7: -5
+        value/8: -6
+        value/9: -7
+        value/10: -8
+        value/11: -9
+        value/12: --best
+        value/13: -V
+        value/14: -L
 
 # input file
-infile/type=file
-infile/title=Input file
-infile/displayorder=2
-infile/order=100
-infile/value/nonempty=%a
-infile/mustnotempty=1
-outfile/mustexist=1
+    infile:
+        type: file
+        title: Input file
+        displayorder: 2
+        order: 100
+        value/nonempty: "%a"
+        mustnotempty: 1
+        mustexist: 1
 
 # output file
-outfile/type=file
-outfile/title=Output file(Optional)
-outfile/displayorder=3
-outfile/order=90
-outfile/value/nonempty=-o %a
-outfile/mustexist=0
+    outfile:
+        type: file
+        title: Output file(Optional)
+        displayorder: 3
+        order: 90
+        value/nonempty: -o %a
+        mustexist: 0
 
 # verbose
-verbose/type=bool
-verbose/title=Verbose mode?
-verbose/order=10
-verbose/displayorder=50
-verbose/value/yes=-v
-verbose/value/no=-q
-verbose/default=1
+    verbose:
+        type: bool
+        title: Verbose mode?
+        order: 10
+        displayorder: 50
+        value/yes: -v
+        value/no: -q
+        default: 1
 
 # backup file
-backup/type=bool
-backup/title=Keep backup file?
-backup/order=11
-backup/displayorder=20
-backup/value/yes=-k
-backup/default=0
+    backup:
+        type: bool
+        title: Keep backup file?
+        order: 11
+        displayorder: 20
+        value/yes: -k
+        default: 0
 
 # force compression of suspicious files
-f/type=bool
-f/title=Force compression of suspicious files?
-f/order=12
-f/displayorder=30
-f/value/yes=-f
-f/default=0
+    f:
+        type: bool
+        title: Force compression of suspicious files?
+        order: 12
+        displayorder: 30
+        value/yes: -f
+        default: 0
 
 # overlay options
-overlay/type=list
-overlay/title=Overlay option
-overlay/displayorder=60
-overlay/order=20
-overlay/list=copy any extra data attached to the file [default],strip any extra data attached to the file [DANGEROUS],don't compress a file with an overlay
-overlay/defualt=0
-overlay/value/0=--overlay=copy
-overlay/value/1=--overlay=strip
-overlay/value/2=--overlay=skip
+    overlay:
+        type: list
+        title: Overlay option
+        displayorder: 60
+        order: 20
+        list: copy any extra data attached to the file [default],strip any extra data attached to the file [DANGEROUS],don't compress a file with an overlay
+        defualt: 0
+        value/0: "--overlay: copy"
+        value/1: "--overlay: strip"
+        value/2: "--overlay: skip"
 
-[about]
-name=Ultimate Packer for eXecutables
-description=Compress or expand executable files
-url=http://upx.sf.net
-authors=Markus Oberhumer,Laszlo Molnar,John Reiser
+about:
+    name: Ultimate Packer for eXecutables
+    description: Compress or expand executable files
+    url: http://upx.sf.net
+    authors: Markus Oberhumer,Laszlo Molnar,John Reiser
