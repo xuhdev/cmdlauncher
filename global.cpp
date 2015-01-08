@@ -1,7 +1,7 @@
 /*
  * CmdLauncher
  *
- * Copyright (c) 2011 Hong Xu
+ * Copyright (c) 2011-2015 Hong Xu
  *
  *
  * This file is part of CmdLauncher.
@@ -10,12 +10,12 @@
  * under the terms of the GNU General Public License as published by the Free
  * Software Foundation, either version 3 of the License, or (at your option)
  * any later version.
- * 
+ *
  * CmdLauncher is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
  * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
  * more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License along
  * with CmdLauncher. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -27,11 +27,11 @@
 #include <QFileInfo>
 #include <QMessageBox>
 #include <QRegExp>
-#include <QSettings>
 #include <QStringList>
 #include <QTextStream>
 #include <QtAlgorithms>
 #include <cstdlib>
+#include <yaml-cpp/yaml.h>
 
 Global::Global()
 {
@@ -57,7 +57,7 @@ Global::Global()
         if(file_flag)
         {
             file_flag = false;
-            this->iniFile = arg;
+            this->confFile = arg;
         }
         else if(geometry_flag)
         {
@@ -76,8 +76,8 @@ Global::Global()
             Global::printHelp();
             exit(0);
         }
-        else if(this->iniFile.isEmpty())
-            this->iniFile = arg;
+        else if(this->confFile.isEmpty())
+            this->confFile = arg;
         else
         {
             Global::printText(stderr, QObject::tr("Arguments error")
@@ -92,23 +92,23 @@ Global::Global()
 
     // if no cla file is specified, ask the user to choose one. If the user
     // cancels, exit
-    if(iniFile.isEmpty())
+    if(confFile.isEmpty())
     {
         QString message(QObject::tr("You must specify a cla file"));
 
         QMessageBox::information(NULL, QObject::tr("CmdLauncher"), message);
 
-        iniFile = QFileDialog::getOpenFileName(NULL, message);
+        confFile = QFileDialog::getOpenFileName(NULL, message);
 
-        if(iniFile.isEmpty())
+        if(confFile.isEmpty())
             exit(3);
     }
     // if the cla file is not readable, then we give an error message and exit
-    QFileInfo fi_ini(iniFile);
+    QFileInfo fi_ini(confFile);
     if(!fi_ini.isReadable())
     {
         QString message(QObject::tr("Unable to load file") + " \"" +
-                iniFile + "\". " + QObject::tr("Now Exit."));
+                confFile + "\". " + QObject::tr("Now Exit."));
         printText(stderr, message
 #ifdef Q_OS_WIN
                 , MESSAGEBOXTYPE_CRITICAL
@@ -117,48 +117,70 @@ Global::Global()
         exit(4);
     }
 
-    // parse the ini file
-    QSettings ini(this->iniFile, QSettings::IniFormat);
+    // parse the config file
+    YAML::Node config = YAML::LoadFile(this->confFile.toUtf8().constData());
+
+#define SET_VALUE(section, x, entry)       \
+    do \
+    { \
+        if (section[entry]) \
+            x = QString::fromStdString(section[entry].as<std::string>()); \
+    } while (0)
+
 
     // "general" section
-    this->command = ini.value("cmd").toString();
-    this->tabs = ini.value("tabs").toStringList();
-    this->windowTitle = ini.value("title").toString();
-    if(ini.allKeys().contains("geometry") && !geometry_set)
-        this->startupGeometry = convertGeometryStringToRect(
-                ini.value("geometry").toString());
-
-    // "items" section
-    ini.beginGroup("items");
-
-    Q_FOREACH(const QString& item, ini.childGroups())
+    if (config["general"])
     {
-        ini.beginGroup(item);
+        YAML::Node config_general = config["general"];
 
-        // read them into a new Global::Item
-        Global::Item* new_item = new Global::Item();
-        Q_FOREACH(const QString& key, ini.allKeys())
-        {
-           (*new_item)[key] = ini.value(key);
-        }
-
-        this->items.append(new_item);
-
-        ini.endGroup(); // ini.beginGroup(item);
+        SET_VALUE(config_general, this->command, "cmd");
+        SET_VALUE(config_general, this->windowTitle, "title");
+        QString tabs;
+        SET_VALUE(config_general, tabs, "tabs");
+        this->tabs = tabs.split(',');
+        if(config_general["geometry"] && !geometry_set)
+            this->startupGeometry = convertGeometryStringToRect(
+                QString::fromStdString(
+                    config_general["geometry"].as<std::string>()));
     }
 
-    ini.endGroup(); // ini.beginGroup("items");
+    // "items" section
+    if (config["items"])
+    {
+        YAML::Node config_items = config["items"];
 
-    ini.beginGroup("about");
+        for (YAML::Node::const_iterator item = config_items.begin();
+             item != config_items.end(); ++ item)
+        {
+            // read them into a new Global::Item
+            Global::Item* new_item = new Global::Item();
 
-    about.name = ini.value("name").toString();
-    about.version = ini.value("version").toString();
-    about.description = ini.value("description").toString();
-    about.authors = ini.value("authors").toStringList();
-    about.url = ini.value("url").toString();
-    about.pixmapFile = ini.value("pixmap").toString();
+            for (YAML::Node::const_iterator it = item->second.begin();
+                 it != item->second.end(); ++ it)
+                (*new_item)[QString::fromStdString(
+                        it->first.as<std::string>())] =
+                    QString::fromStdString(it->second.as<std::string>());
 
-    ini.endGroup(); // ini.beginGroup("about");
+            this->items.append(new_item);
+        }
+    }
+
+    // "about" section
+    if (config["about"] && config["about"].IsMap())
+    {
+        YAML::Node config_about = config["about"];
+
+        SET_VALUE(config_about, about.name, "name");
+        SET_VALUE(config_about, about.version, "version");
+        SET_VALUE(config_about, about.description, "description");
+        QString authors;
+        SET_VALUE(config_about, authors, "authors");
+        about.authors = authors.split(',');
+        SET_VALUE(config_about, about.url, "url");
+        SET_VALUE(config_about, about.pixmapFile, "pixmap");
+    }
+
+#undef SET_VALUE
 
     // sort items according to "order"
     qSort(items.begin(), items.end(), Global::lessThanItemsOrder);

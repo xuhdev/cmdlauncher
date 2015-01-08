@@ -4,7 +4,7 @@
 #
 #
 # This file is part of CmdLauncher.
-# 
+#
 # CmdLauncher is free software: you can redistribute it and/or modify it
 # under the terms of the GNU General Public License as published by the Free
 # Software Foundation, either version 3 of the License, or (at your option)
@@ -14,16 +14,21 @@
 # ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
 # FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
 # more details.
-# 
+#
 # You should have received a copy of the GNU General Public License along
 # with CmdLauncher. If not, see <http://www.gnu.org/licenses/>.
 
 project(cmdlauncher)
 cmake_minimum_required(VERSION 2.8)
 
+# Installed cmake modules
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake")
+
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 find_package(Qt5Widgets REQUIRED)
+find_package(YamlCpp REQUIRED)
+include_directories(${YAMLCPP_INCLUDE_DIR})
 # include(${QT_USE_FILE})
 
 set(cmdlauncher_SRCS
@@ -45,5 +50,5 @@ set(cmdlauncher_MOC_HDRS
 add_definitions(-DQT_NO_KEWORDS)
 
 add_executable(cmdlauncher ${cmdlauncher_SRCS} ${cmdlauncher_MOC_SRCS})
-target_link_libraries(cmdlauncher Qt5::Widgets)
+target_link_libraries(cmdlauncher Qt5::Widgets ${YAMLCPP_LIBRARY})
 install(TARGETS cmdlauncher DESTINATION bin)
