@@ -22,8 +22,8 @@ To install it:
 
 # make install
 
-For other platforms (such as Win32), just use cmake to generate the project file and use your
-favorate compiler to build it.
+For other platforms (such as Win32), just use cmake to generate the project
+file and use your favorate compiler to build it.
 
 3. Usage
 
@@ -31,3 +31,20 @@ To use it, create a file storing the information of your command first, for
 example "example.cla". Edit this file with a text editor. The format of this
 file could be reffered to sample.cla. Execute "cmdlauncher sample.cla" to see
 how it works.
+
+4. License
+
+Copyright (c) 2011-2015 Hong Xu <hong@topbug.net>
+
+CmdLauncher is free software: you can redistribute it and/or modify it
+under the terms of the GNU General Public License as published by the Free
+Software Foundation, either version 3 of the License, or (at your option)
+any later version.
+
+CmdLauncher is distributed in the hope that it will be useful, but WITHOUT
+ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
+more details.
+
+You should have received a copy of the GNU General Public License along
+with CmdLauncher. If not, see <http://www.gnu.org/licenses/>.

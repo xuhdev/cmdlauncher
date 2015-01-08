@@ -417,8 +417,8 @@ void MainWindow::onClickedMenuItemAboutCmdLauncher()
                 "CmdLauncher",
                 "0.1git",
                 "Launch a command graphically\n\n"
-                "Copyright 2011-2014 Hong Xu",
-                QStringList("Hong Xu <hong@topbug.net>"),
+                "Copyright 2011-2015 Hong Xu (hong@topbug.net)",
+                QStringList("Hong Xu"),
                 "http://www.topbug.net/cmdlauncher").exec();
 }
 
