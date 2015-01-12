@@ -32,7 +32,14 @@ example "example.cla". Edit this file with a text editor. The format of this
 file could be reffered to sample.cla. Execute "cmdlauncher sample.cla" to see
 how it works.
 
-4. License
+4. Bug Report and Contribution
+
+You can report bugs in the issue tracker
+<https://savannah.nongnu.org/bugs/?func=additem&group=cmdlauncher>. You can
+also send me patches or pull request here
+<https://savannah.nongnu.org/patch/?func=additem&group=cmdlauncher>.
+
+5. License
 
 Copyright (c) 2011-2015 Hong Xu <hong@topbug.net>
 
