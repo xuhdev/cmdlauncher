@@ -32,7 +32,11 @@ example "example.cla". Edit this file with a text editor. The format of this
 file could be reffered to sample.cla. Execute "cmdlauncher sample.cla" to see
 how it works.
 
-4. Bug Report and Contribution
+4. Questions, Bug Reports and Contribution
+
+Questions can be asked on the mailing list
+
+   https://lists.nongnu.org/mailman/listinfo/cmdlauncher-general
 
 You can report bugs in the issue tracker
 
@@ -42,9 +46,7 @@ Please send patches or pull requests to this link
 
     https://savannah.nongnu.org/patch/?func=additem&group=cmdlauncher
 
-or to the mailing list
-
-   https://lists.nongnu.org/mailman/listinfo/cmdlauncher-general
+Alternatively, you can also send them to the mailing list.
 
 5. License
 
